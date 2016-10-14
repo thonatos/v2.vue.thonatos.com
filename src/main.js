@@ -6,14 +6,14 @@ import App from './App'
 import store from './store/'
 
 import Info from './components/info'
-import About from './components/about'
+import Message from './components/message'
 import User from './components/user'
 
 Vue.use(Mint)
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/about', component: About },
+  { path: '/message', component: Message },
   { path: '/info', component: Info },
   { path: '/user', component: User },
   { path: '/', redirect: '/user' }
