@@ -2,7 +2,7 @@
 	<div class='user'>
     <div class="detail">
       <img class="avatar" :src="user.avatar" alt="">
-      <h4>{{ user.name }} - {{ user.workPlace }}</h4>      
+      <h4>{{ getDesc(user.name, user.workPlace) }}</h4>      
       <ul class="info">
         <li>{{ user.mobile }}</li>
         <li>{{ user.position }}</li>          
@@ -13,22 +13,23 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data () {
-    return {
-      user: {
-        'avatar': 'http://static.dingtalk.com/media/lADOEYgqsM0C7s0C7A_748_750.jpg',
-        'email': 'thonatos@arashivision.com',
-        'isAdmin': true,
-        'isBoss': false,
-        'mobile': '18013140302',
-        'name': '杨贺强',
-        'openId': 'XFkjaWWaZO1jCpEqMw8fHwiEiE',
-        'position': '应用软件部 工程师',
-        'userid': '02034201333231',
-        'workPlace': '深圳'
+  computed: {
+    ...mapGetters({
+      user: 'user'
+    })
+  },
+  methods: {
+    getDesc: function (name, place) {
+      if (name && place) {
+        return name + ',' + place
       }
-    }
+      return ''
+    },
+    ...mapActions([
+      'loadUser'
+    ])
   }
 }
 </script>

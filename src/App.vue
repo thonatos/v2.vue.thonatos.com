@@ -30,8 +30,6 @@ export default {
   },
   watch: {
     selected (val) {
-      console.log(this)
-      this.$store.commit('increment')
       this._router.push(val)
     }
   }
@@ -57,13 +55,12 @@ export default {
     
     .content{
       flex: 1;   
-      background: #f8f8f8;         
+      // background: #f8f8f8;         
       overflow: scroll; 
     }
 
     .footer{      
       flex: 0 0 55px;
-
       .mint-tabbar {
         background-color: #fff !important;
         > .mint-tab-item.is-selected {           

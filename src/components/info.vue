@@ -1,40 +1,42 @@
 <template>
-  <div class="info">
-    <mt-cell v-for="(value, key) in info" :title="key" :label="value.toString()" class="detail">
-    </mt-cell>    
+  <div class="info" checkActive>
+    <div class="pass">
+      <h4>密码设置</h4>
+      <mt-field v-model="pass_old" label="password" placeholder="Input old password" type="password"></mt-field> 
+      <mt-field v-show="info.active" v-model="pass_new" label="password" placeholder="Input new password" type="password"></mt-field>
+      <mt-button @click.native="submit()" class="submit" size="large">{{ info.submit_text }}</mt-button>
+      
+      <p class="tips">
+        友情提示：不填写则设置出事密码为手机号
+      </p>
+      <p class="warning">
+        {{ info.msg }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      info: {
-        'active': true,
-        'avatar': 'http://static.dingtalk.com/media/lADOEYgqsM0C7s0C7A_748_750.jpg',
-        'department': [
-          8587047,
-          8587094
-        ],
-        'dingId': '$:LWCP_v1:$U0XeYFU8ZSuy97nv94X1pg==',
-        'email': 'thonatos@arashivision.com',
-        'errcode': 0,
-        'errmsg': 'ok',
-        'isAdmin': true,
-        'isBoss': false,
-        'isHide': false,
-        'isLeaderInDepts': '{8587047:false,8587094:false}',
-        'jobnumber': '',
-        'mobile': '18013140302',
-        'name': '杨贺强',
-        'openId': 'XFkjaWWaZO1jCpEqMw8fHwiEiE',
-        'orderInDepts': '{8587047:8101628983469050,8587094:8101628983469050}',
-        'position': '应用软件部 工程师',
-        'remark': '',
-        'tel': '',
-        'userid': '02034201333231',
-        'workPlace': '深圳'
-      }
+      pass_old: '',
+      pass_new: ''
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'user',
+      info: 'info'
+    })
+  },
+  methods: {
+    submit: function () {
+      this.$store.commit('updateUser', {
+        pass_old: this.pass_old,
+        pass_new: this.pass_new
+      })
     }
   }
 }
@@ -42,4 +44,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+  .info{         
+    padding: 1rem;        
+    .pass{
+      h4{
+        margin-bottom: 4rem;
+      }
+      .submit{
+        margin-top: 12rem;
+      }
+      .tips{
+        color: #ccc;
+        font-size: 0.5rem;
+        margin-top: 2rem;
+      }
+      .warning{
+        color: red;
+      }
+    }
+  }
 </style>
