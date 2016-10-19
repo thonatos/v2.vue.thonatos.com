@@ -18,10 +18,10 @@ export default new Vuex.Store({
   mutations: {
     updateUser (state, data) {
       console.log('updateUser')
-      data.userid = state.user.userid || 0
+      data.id = state.user.id || 0
       Vue.http.post(window.INSTA.host + '/active', data).then((res) => {
-        switch (res.body.errcode) {
-          case 0:
+        switch (res.body.code) {
+          case 200:
             if (state.info.active) {
               state.info.submit_text = '更新'
             }
@@ -29,6 +29,9 @@ export default new Vuex.Store({
             break
           case 403:
             state.info.msg = '认证失败，请重新打开并提交.'
+            break
+          case 404:
+            state.info.msg = '更新失败，当前用户不存在.'
             break
           case 500:
             state.info.msg = '更新失败，请联系管理员处理.'
